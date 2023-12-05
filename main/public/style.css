@@ -1,0 +1,102 @@
+body {
+    display: grid;
+    place-items: center;
+    height: 100vh;
+}
+  
+.stroke {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 700px;
+    height: 400px;
+    background-color: #FED6BC;
+    border-radius: 80px;
+    text-align: center;
+    position: relative;
+}
+  
+h1 {
+    color: #FFFADD;
+    font-family: Segoe UI;
+    font-size: 40px;
+    font-weight: bold;
+    margin-bottom: 20px; 
+}
+  
+input[type="text"] {
+    width: 650px;
+    height: 45px;
+    padding: 0 21px; 
+    background: #FFFADD;
+    border-radius: 20px;
+    border: none;
+    font-family: Segoe UI;
+    font-size: 30px;
+    color: #B39F7A;
+    outline: none;
+    margin-bottom: 30px;
+}
+  
+.Create {
+    width: 240px;
+    height: 50px;
+    background: #FFFADD;
+    color: #B39F7A;
+    border-radius: 20px;
+    font-family: Segoe UI;
+    font-size: 30px;
+    border: none;
+    margin-bottom: 30px;
+}
+  
+.Create:hover {
+    background: #FEE8CA;
+    transition: background-color 0.3s;
+}
+  
+h2 {
+    color: #FFFADD;
+    font-family: Segoe UI;
+    font-size: 36px;
+    font-weight: bold; 
+    margin-bottom: 20px; 
+}
+  
+.Input {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+  
+.Link {
+    background: #FFFADD;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 600px;
+    height: 45px;
+    border: none;
+    color: #B39F7A;
+    font-family: Segoe UI;
+    font-size: 20px;
+    font-weight: bold; 
+}
+
+.Link:hover{
+    background: #FEE8CA;
+    transition: background-color 0.3s;
+}
+  
+.Error {
+    color: #FF8C69;
+    font-family: Segoe UI;
+    font-size: 20px;
+    font-weight: bold; 
+    margin: 0; 
+}
+  
