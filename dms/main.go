@@ -70,7 +70,9 @@ func (request *JsonRequest) processPostRequest(links *structs.Link_source, stati
 			return base, nil
 		}
 	case "statistics":
-		err := statistics.Qpush(*request.IP + "\n" + request.Link + "\n" + *request.TimeInterval)
+		link, _ := links.Short_link.Hget(request.Link)
+		link += "    (" + request.Link + ")"
+		err := statistics.Qpush(*request.IP + "\n" + link+ "\n" + *request.TimeInterval)
 		return "", err
 	default:
 		return "", errors.New("table not found")

@@ -6,8 +6,8 @@ import (
 	"errors"
 	"fmt"
 	"net"
+	"strconv"
 	"sync"
-	"time"
 
 	"status_servis/src/response"
 	"status_servis/src/structs"
@@ -102,27 +102,45 @@ func (request *JsonRequest) processGetRequest(conn net.Conn) error {
 		return err
 	}
 
+	link, _ := strconv.Atoi(request.Link)
+	ip, _ := strconv.Atoi(*request.IP)
+	time, _ := strconv.Atoi(*request.TimeInterval)
+	rep := response.NewProcessor(&link, &ip, &time)
+	js := response.JsonResponse{}
+	js.CreateReport(&gobResponse, *rep)
+
+	jsonData, err = json.Marshal(js)
+	if err != nil {
+		fmt.Println("Ошибка при кодировании в JSON:", err)
+		return err
+	}
+
+	_, err = conn.Write(jsonData)
+	if err != nil {
+		fmt.Println("Ошибка при отправке данных:", err)
+		return err
+	}
 	return nil
 }
 
 func main() {
-	queu := &structs.Queue{}
-	for i := 0; i <= 1000000; i++ {
-		queu.Qpush("127.0.0.1\n2\n22:49-22:50")
-		queu.Qpush("127.0.0.1\n3\n22:49-22:50")
-		queu.Qpush("127.0.0.4\n2\n22:49-22:50")
-		queu.Qpush("127.0.0.1\n2\n22:49-22:50")
-		queu.Qpush("127.0.0.1\n3\n22:48-22:49")
-		queu.Qpush("127.0.0.12\n2\n22:49-22:50")
-	}
-	startTime := time.Now()
+	// queu := &structs.Queue{}
+	// for i := 0; i <= 1000000; i++ {
+	// 	queu.Qpush("127.0.0.1\n2\n22:49-22:50")
+	// 	queu.Qpush("127.0.0.1\n3\n22:49-22:50")
+	// 	queu.Qpush("127.0.0.4\n2\n22:49-22:50")
+	// 	queu.Qpush("127.0.0.1\n2\n22:49-22:50")
+	// 	queu.Qpush("127.0.0.1\n3\n22:48-22:49")
+	// 	queu.Qpush("127.0.0.12\n2\n22:49-22:50")
+	// }
+	// startTime := time.Now()
 
-	js := &response.JsonResponse{}
-	js.LinkIpTime(queu)
-	endTime := time.Now()
-	duration := endTime.Sub(startTime)
+	// js := &response.JsonResponse{}
+	// js.LinkIpTime(queu)
+	// endTime := time.Now()
+	// duration := endTime.Sub(startTime)
 
-	fmt.Printf("Время выполнения: %v\n", duration)
+	// fmt.Printf("Время выполнения: %v\n", duration)
 
 	address := "127.0.0.1:1333"
 	listener, err := net.Listen("tcp", address)
