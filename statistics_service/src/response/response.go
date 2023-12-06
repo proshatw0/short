@@ -1,8 +1,6 @@
 package response
 
 import (
-	"encoding/json"
-	"fmt"
 	"strconv"
 	"strings"
 
@@ -91,7 +89,7 @@ func (js *JsonResponse) parentalElement(value *string, status int, pids *structs
 }
 
 func (js *JsonResponse) subElement(value *string, status int, id int, pids *structs.Hash_Table) {
-	fmt.Println(*value, status)
+	var err error
 	if id == 0 {
 		switch status {
 		case 0:
@@ -101,7 +99,7 @@ func (js *JsonResponse) subElement(value *string, status int, id int, pids *stru
 		case 2:
 			js.Append(js.Size+1, js.Size, nil, nil, value, 1)
 		}
-		pids.Hset(strconv.Itoa(js.Size-1), *value)
+		err = pids.Hset(strconv.Itoa(js.Size-1), strconv.Itoa(js.Size))
 	} else {
 		switch status {
 		case 0:
@@ -111,12 +109,12 @@ func (js *JsonResponse) subElement(value *string, status int, id int, pids *stru
 		case 2:
 			js.Append(js.Size+1, id, nil, nil, value, 1)
 		}
-	}
-	err := pids.Hset(strconv.Itoa(id), strconv.Itoa(js.Size))
-	if err != nil {
-		val, _ := pids.Hdel(strconv.Itoa(js.Size - 1))
-		val += "\n" + strconv.Itoa(js.Size)
-		pids.Hset(strconv.Itoa(js.Size-1), val)
+		err = pids.Hset(strconv.Itoa(id), strconv.Itoa(js.Size))
+		if err != nil {
+			val, _ := pids.Hdel(strconv.Itoa(id))
+			val += "\n" + strconv.Itoa(js.Size)
+			pids.Hset(strconv.Itoa(id), val)
+		}
 	}
 }
 
@@ -126,21 +124,22 @@ func (js *JsonResponse) processingSubElement(pi *string, status *int, value *str
 		pidu, _ := strconv.Atoi(val)
 		switch *status {
 		case 0:
-			if js.Table[pidu-1].IP != nil && *js.Table[pidu-1].IP != *value {
-				continue
+			if js.Table[pidu-1].IP != nil && *js.Table[pidu-1].IP == *value {
+				js.Table[pidu-1].Cout++
+				return pidu
 			}
 		case 1:
-			if js.Table[pidu-1].Link != nil && *js.Table[pidu-1].Link != *value {
-				continue
+			if js.Table[pidu-1].Link != nil && *js.Table[pidu-1].Link == *value {
+				js.Table[pidu-1].Cout++
+				return pidu
 			}
 		case 2:
-			if js.Table[pidu-1].TimeInterval != nil && *js.Table[pidu-1].TimeInterval != *value {
-				continue
+			if js.Table[pidu-1].TimeInterval != nil && *js.Table[pidu-1].TimeInterval == *value {
+				js.Table[pidu-1].Cout++
+				return pidu
 			}
 
 		}
-		js.Table[pidu-1].Cout++
-		return pidu
 	}
 	return 0
 }
@@ -198,10 +197,4 @@ func (js *JsonResponse) CreateReport(statistics *structs.Queue, status Processor
 			statistics.Qpop()
 		}
 	}
-	jsonData, err := json.MarshalIndent(js, "", "  ")
-	if err != nil {
-		fmt.Println("JОшибка при маршалинге в JSON:", err)
-		return
-	}
-	fmt.Println(string(jsonData))
 }

@@ -1,7 +1,7 @@
 function copyLink() {
   const button = document.getElementById("Link");
   const buttonText = button.textContent;
-  const value = `${buttonText}?explicit=true`
+  const value = buttonText
 
   const tempInput = document.createElement("input");
   tempInput.value = value;
@@ -33,8 +33,7 @@ function create_link() {
     .then(data => {
       container = document.querySelector(".Input")
       stroke = document.querySelector(".stroke")
-      //if (data.includes("10.241.125.222")) {
-      if (data) {
+      if (data.includes("31.28.27.213:3000")) {
           const errorElement = document.getElementById('Error');
         if (errorElement) {
           errorElement.remove();

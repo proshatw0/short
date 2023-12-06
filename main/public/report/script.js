@@ -75,7 +75,6 @@ function create_report() {
     })
     .then(response => response.json())
     .then(data => {
-        console.log(data);
         function sortByPid(data, pid = 0, depth = 0) {
             const result = [];
             
@@ -94,7 +93,6 @@ function create_report() {
 
         const tableContainer = document.getElementById('TableBody');
         tableContainer.innerHTML = '';
-        console.log(sortedData);
 
         sortedData.forEach(item => {
             const row = document.createElement('tr');

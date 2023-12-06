@@ -8,7 +8,6 @@ import (
 	"net"
 	"strconv"
 	"sync"
-	"time"
 
 	"dms/src/checkURL"
 	"dms/src/structs"
@@ -37,6 +36,7 @@ func (request *JsonRequest) ProcessRequest(conn net.Conn, links *structs.Link_so
 func (request *JsonRequest) processPostRequest(links *structs.Link_source, statistics *structs.Queue) (string, error) {
 	switch request.Table {
 	case "links":
+		workfile.SaveToGobFile(links, "data/links.gob")
 		if !checkURL.CheckURL(request.Link) {
 			return "", errors.New("link is not available")
 		}
@@ -72,7 +72,8 @@ func (request *JsonRequest) processPostRequest(links *structs.Link_source, stati
 	case "statistics":
 		link, _ := links.Short_link.Hget(request.Link)
 		link += "    (" + request.Link + ")"
-		err := statistics.Qpush(*request.IP + "\n" + link+ "\n" + *request.TimeInterval)
+		err := statistics.Qpush(*request.IP + "\n" + link + "\n" + *request.TimeInterval)
+		workfile.SaveToGobFile(statistics, "data/statistics.gob")
 		return "", err
 	default:
 		return "", errors.New("table not found")
@@ -146,18 +147,6 @@ func main() {
 		}(&links, &statistics)
 	}
 
-	go func(links *structs.Link_source, statistics *structs.Queue) {
-		ticker := time.NewTicker(1 * time.Minute)
-		defer ticker.Stop()
-
-		for range ticker.C {
-			mutex.Lock()
-			workfile.SaveToGobFile(links, "data/links.gob")
-			workfile.SaveToGobFile(statistics, "data/statistics.gob")
-			mutex.Unlock()
-		}
-	}(&links, &statistics)
-
 	wg.Wait()
 }
 
@@ -172,7 +161,6 @@ func handleConnection(conn net.Conn, mutex *sync.Mutex, links *structs.Link_sour
 		fmt.Println("Error decoding JSON:", err)
 		return
 	}
-	fmt.Println(request.Method, request.Table, request.Link)
 
 	mutex.Lock()
 	value, err := request.ProcessRequest(conn, links, statistics)

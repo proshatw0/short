@@ -124,24 +124,6 @@ func (request *JsonRequest) processGetRequest(conn net.Conn) error {
 }
 
 func main() {
-	// queu := &structs.Queue{}
-	// for i := 0; i <= 1000000; i++ {
-	// 	queu.Qpush("127.0.0.1\n2\n22:49-22:50")
-	// 	queu.Qpush("127.0.0.1\n3\n22:49-22:50")
-	// 	queu.Qpush("127.0.0.4\n2\n22:49-22:50")
-	// 	queu.Qpush("127.0.0.1\n2\n22:49-22:50")
-	// 	queu.Qpush("127.0.0.1\n3\n22:48-22:49")
-	// 	queu.Qpush("127.0.0.12\n2\n22:49-22:50")
-	// }
-	// startTime := time.Now()
-
-	// js := &response.JsonResponse{}
-	// js.LinkIpTime(queu)
-	// endTime := time.Now()
-	// duration := endTime.Sub(startTime)
-
-	// fmt.Printf("Время выполнения: %v\n", duration)
-
 	address := "127.0.0.1:1333"
 	listener, err := net.Listen("tcp", address)
 	if err != nil {
@@ -183,7 +165,6 @@ func handleConnection(conn net.Conn, mutex *sync.Mutex) {
 		fmt.Println("Error decoding JSON:", err)
 		return
 	}
-	fmt.Println(request.Method, request.Table, request.Link, *request.TimeInterval, *request.IP)
 	mutex.Lock()
 	err = request.ProcessRequest(conn)
 	fmt.Println(err)

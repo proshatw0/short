@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  db:
+    build:
+      context: ./dms
+    ports:
+      - "6379:6379"
+
+  url-shortener:
+    build:
+      context: ./main
+    ports:
+      - "3000:3000"
+
+  stats-collector:
+    build:
+      context: ./statistics_service
+    ports:
+      - "1333:1333"

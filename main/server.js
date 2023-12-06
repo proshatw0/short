@@ -25,8 +25,8 @@ app.post('/create_report', (req, res) => {
       method: 'GET',
       table: 'statistics',
       link: variable2,
-      ip: variable1,
-      time_interval: variable3,
+      ip: variable3,
+      time_interval: variable1,
     };
     const requestString = JSON.stringify(requestData);
     client.write(requestString);
@@ -83,7 +83,7 @@ app.post('/create_link', (req, res) => {
     });
 
     client.on('end', () => {
-      const short_link = `http://127.0.0.1/${responseData}`
+      const short_link = `http://31.28.27.213:3000/${responseData}`
       res.end(short_link);
       client.end();
     });
@@ -97,8 +97,8 @@ app.post('/create_link', (req, res) => {
 
 app.get('/:value', (req, res) => {
   const value = req.params.value;
-  const isExplicitRedirect = req.query.explicit === 'true';
-  console.log(value)
+
+  
   if (value === "favicon.ico") {
     res.status(204).end();
     return; 
@@ -118,7 +118,7 @@ app.get('/:value', (req, res) => {
     const filePath = path.resolve("site", 'report.html');
     res.sendFile(filePath);
     return; 
-    }
+  }
 
   const client = new net.Socket();
   client.connect(6379, '127.0.0.1', () => {
@@ -168,7 +168,6 @@ app.get('/:value', (req, res) => {
 
     client1.on('close', () => {
     });
-
     res.redirect(responseData);
 
     client.end();
@@ -180,6 +179,6 @@ app.get('/:value', (req, res) => {
   });
 });
 
-app.listen(8080, '127.0.0.1', () => {
-  console.log('Сервер запущен на порту 80');
+app.listen(3000, '31.28.27.213', () => {
+  console.log('Сервер запущен на порту 3000');
 });
