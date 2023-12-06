@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/report/reset.css">
+    <link rel="stylesheet" type="text/css" href="/report/normalize.css">
+    <link rel="stylesheet" type="text/css" href="/report/style.css">
+    <title>report</title>
+</head>
+<body>
+    <div class="stroke">
+        <h1>Введите очередность</h1>
+        <p>URL</p>
+        <p>IP</p>
+        <p>Time</p>
+    
+        <div class="inputvalue">
+            <input type="number" placeholder="Input Field 1" class="link" id="link" min="0" max="3" onkeydown="return false" onpaste="return false">
+            <input type="number" placeholder="Input Field 2" class="ip" id="ip" min="0" max="3" onkeydown="return false" onpaste="return false">
+            <input type="number" placeholder="Input Field 3" class="time" id="time" min="0" max="3" onkeydown="return false" onpaste="return false">
+        </div>
+        <button class="Create" id="Create" onclick="create_report()">Собрать</button>
+    </div>   
+    <table>
+        <thead>
+            <tr>
+                <th>Детализация</th>
+                <th>Колличество переходов</th>
+            </tr>
+        </thead>
+        <tbody class="Table" id="TableBody">
+            
+        </tbody>
+    </table>
+    
+    <script src="/report/script.js"></script>
+</body>
+</html>

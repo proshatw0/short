@@ -1,0 +1,111 @@
+body {
+    display: grid;
+    place-items: center;
+    height: 100vh;
+}
+  
+.stroke {
+    justify-content: center;
+    align-items: center;
+    width: 700px;
+    height: 250px;
+    background-color: #FED6BC;
+    border-radius: 80px;
+    text-align: center;
+    position: relative;
+}
+  
+h1 {
+    color: #FFFADD;
+    font-family: Segoe UI;
+    font-size: 40px;
+    font-weight: bold;
+    margin-bottom: 20px; 
+}
+
+p {
+    display: inline-block;
+    margin-left: 50px;
+    margin-right: 50px;
+    color: #FFFADD;
+    font-family: Segoe UI;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px; 
+}
+input[type="number"] {
+    stroke: none;
+    display: inline-block;
+    margin-left: 25px;
+    margin-right: 25px;
+    color: black;
+    font-family: Segoe UI;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px; 
+}
+
+.Create {
+    width: 240px;
+    height: 50px;
+    background: #FFFADD;
+    color: #B39F7A;
+    border-radius: 20px;
+    font-family: Segoe UI;
+    font-size: 30px;
+    border: none;
+    margin-bottom: 30px;
+}
+
+.Create:hover {
+    background: #FEE8CA;
+    transition: background-color 0.3s;
+}
+
+table {
+    border-collapse: collapse;
+    width: 80%;
+    margin: 20px auto;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+    width: 70%; 
+}
+
+.Table {
+    text-align: center;
+    margin-bottom: 100px; 
+}
+
+td {
+    max-width: 500px;
+    word-wrap: break-word; 
+}
+
+th {
+    background-color: #FED6BC;
+    color: white;
+    font-size: 18px;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+.with-padding {
+    padding-left: 20px;
+}
+
+.double-padding {
+    padding-left: 40px;
+}
