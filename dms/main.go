@@ -119,7 +119,7 @@ func main() {
 		fmt.Println(err)
 	}
 
-	address := "127.0.0.1:6379"
+	address := "0.0.0.0:6379"
 	listener, err := net.Listen("tcp", address)
 	if err != nil {
 		fmt.Println("Error when starting the server:", err)

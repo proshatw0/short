@@ -33,7 +33,7 @@ func (request *JsonRequest) ProcessRequest(conn net.Conn) error {
 }
 
 func (request *JsonRequest) processPostRequest() error {
-	address := "127.0.0.1:6379"
+	address := "dms:6379"
 
 	conn, err := net.Dial("tcp", address)
 	if err != nil {
@@ -66,7 +66,7 @@ func (request *JsonRequest) processPostRequest() error {
 }
 
 func (request *JsonRequest) processGetRequest(conn net.Conn) error {
-	address := "127.0.0.1:6379"
+	address := "dms:6379"
 
 	conn1, err := net.Dial("tcp", address)
 	if err != nil {
@@ -124,7 +124,7 @@ func (request *JsonRequest) processGetRequest(conn net.Conn) error {
 }
 
 func main() {
-	address := "127.0.0.1:1333"
+	address := "0.0.0.0:1333"
 	listener, err := net.Listen("tcp", address)
 	if err != nil {
 		fmt.Println("Error when starting the server:", err)

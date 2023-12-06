@@ -20,7 +20,7 @@ app.post('/create_report', (req, res) => {
   const { variable1, variable2, variable3 } = req.body;
 
   const client = new net.Socket();
-  client.connect(1333, '127.0.0.1', () => {
+  client.connect(1333, 'stats-collector', () => {
     const requestData = {
       method: 'GET',
       table: 'statistics',
@@ -65,7 +65,7 @@ app.post('/create_link', (req, res) => {
 
   req.on('end', () => {
     const client = new net.Socket();
-    client.connect(6379, '127.0.0.1', () => {
+    client.connect(6379, 'dms', () => {
       const requestData = {
         method: 'POST',
         table: 'links',
@@ -121,7 +121,7 @@ app.get('/:value', (req, res) => {
   }
 
   const client = new net.Socket();
-  client.connect(6379, '127.0.0.1', () => {
+  client.connect(6379, 'dms', () => {
     const requestData = {
       method: 'GET',
       table: 'links',
@@ -141,7 +141,7 @@ app.get('/:value', (req, res) => {
   client.on('end', () => {
 
     const client1 = new net.Socket();
-    client1.connect(1333, '127.0.0.1', () => {
+    client1.connect(1333, 'stats-collector', () => {
 
         const localIp = req.ip;
         const timeZone = "Asia/Novosibirsk";
@@ -179,6 +179,6 @@ app.get('/:value', (req, res) => {
   });
 });
 
-app.listen(3000, '31.28.27.213', () => {
+app.listen(3000, '0.0.0.0', () => {
   console.log('Сервер запущен на порту 3000');
 });

@@ -1,20 +1,25 @@
 version: '3'
 
 services:
-  db:
+  dms:
     build:
       context: ./dms
-    ports:
-      - "6379:6379"
+    networks:
+      - mynetwork
 
   url-shortener:
     build:
       context: ./main
+    networks:
+      - mynetwork
     ports:
-      - "3000:3000"
+      - "31.28.27.213:3000:3000"  # Локальный порт для доступа извне
 
   stats-collector:
     build:
       context: ./statistics_service
-    ports:
-      - "1333:1333"
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
